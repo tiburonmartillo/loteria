@@ -1,129 +1,102 @@
-html,
 body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  display: grid;
-  place-items: center;
-  perspective: 1000px;
-}
-
-.board {
-  --card-width: min(200px, 40vmin);
+  font-family: Arial, sans-serif;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  width: calc(4 * var(--card-width));
-  box-sizing: content-box;
-  aspect-ratio: 16/9;
-  transform: rotateX(20deg);
-  border: 4px solid black;
-  border-radius: 16px;
-  padding: 5rem 3rem;
-  background: hsl(201deg, 100%, 32%);
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  margin: 0;
 }
 
-.board,
-.card,
-.wrapper,
-.content {
-  transform-style: preserve-3d;
+#cardsContainer {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  perspective: 600px; /* Agregar perspectiva para 3D */
 }
 
 .card {
-  --duration: 1200ms;
   position: absolute;
-  width: var(--card-width);
-  aspect-ratio: 20/29;
-  outline: none;
+  width: 180px;
+  height: 260px;
+  background-color: #fff; /* Color para el frente de la carta */
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  line-height: 260px;
+  font-size: 2rem;
+  transform-origin: center;
+  transform: rotateX(30deg) rotateY(180deg); /* Inicialmente boca abajo */
+  transition: transform 0.3s ease;
+  background-color: #d0f0c0; /* Color sólido verde claro para el reverso */
+  color: transparent; /* Ocultar el texto del reverso */
+}
+
+.card__front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d0f0c0; /* Color sólido verde claro para el reverso */
+  color: transparent; /* Ocultar el texto del reverso */
+}
+
+#barajar {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
   border: none;
   cursor: pointer;
-  padding: 0;
-  background-color: transparent;
-  transition: all 200ms;
-  pointer-events: none;
+  margin-top: 20px;
 }
 
-.card:nth-child(1) {
-  transform: translateZ(3px);
+#barajar:hover {
+  background-color: #0056b3;
 }
 
-.card:nth-child(2) {
-  transform: translateZ(6px);
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  margin: 0;
 }
 
-.card:nth-child(3) {
-  transform: translateZ(9px);
-}
-
-.wrapper {
-  pointer-events: initial;
-  display: block;
+#cardsContainer {
   position: relative;
-  height: 100%;
-  transition: all var(--duration) ease-out;
-  transform-origin: 200% 50%;
+  width: 200px;
+  height: 300px;
+  transform-style: preserve-3d;
+  transform: perspective(600px);
 }
 
-.content {
-  display: block;
-  height: 100%;
-  transition: all var(--duration);
-}
-
-.face {
-  transition: transform calc(var(--duration) * 3 / 4);
-  transition-delay: calc(var(--duration) / 6);
+.card {
   position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  border-radius: calc(var(--card-width) / 20);
-  background-size: cover;
-  background-position: center;
-  background-color: white;
+  width: 180px;
+  height: 260px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  line-height: 260px;
+  font-size: 2rem;
+  transform-origin: center;
+  transform: rotateX(30deg) translateZ(0);
+  transition: transform 0.3s ease;
 }
 
-.front {
-  transform: rotateZ(0.5turn) rotateY(-0.5turn);
-  border-width: 1px 0px;
-  border-color: black;
-  border-style: solid;
-}
-
-.card:nth-of-type(1) .front {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/English_pattern_ace_of_spades.svg/1024px-English_pattern_ace_of_spades.svg.png");
-}
-
-.card:nth-of-type(2) .front {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/English_pattern_2_of_spades.svg/1024px-English_pattern_2_of_spades.svg.png");
-}
-
-.card:nth-of-type(3) .front {
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/English_pattern_3_of_spades.svg/1024px-English_pattern_3_of_spades.svg.png");
-}
-
-.back {
-  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkKnlurWcUYrlDbGvf8IUz6rLX7oX1hHt7FW_6e4vNOwFfPhmPURXxGK45qVAqW7dtxsY&usqp=CAU");
-  border: 1px solid black;
-}
-
-.card.flipped:nth-child(1) {
-  transform: translateZ(9px);
-}
-
-.card.flipped:nth-child(2) {
-  transform: translateZ(6px);
-}
-
-.card.flipped:nth-child(3) {
-  transform: translateZ(3px);
-}
-
-.card.flipped .wrapper {
-  transform: rotateY(0.5turn);
-}
-
-.card.flipped .content {
-  transform: rotateX(-0.5turn) rotateY(1.5turn);
-}
